@@ -1,9 +1,11 @@
-import argparse
-import os
-import re
-import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse
+#!/usr/bin/env python3
+
+import argparse # Pour traiter les arguments de la ligne de commande
+import os # Pour manipuler les fichiers et répertoires
+import re # Pour les expressions régulières
+import requests # Pour télécharger les ressources
+from bs4 import BeautifulSoup # Pour analyser le HTML
+from urllib.parse import urljoin, urlparse # Pour manipuler les URLs
 
 def download_file(url, path):
     filename = os.path.basename(urlparse(url).path)
