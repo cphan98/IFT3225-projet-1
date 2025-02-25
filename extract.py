@@ -12,13 +12,15 @@ def download_file(url, path):
     filepath = os.path.join(path, filename)
     try:
         response = requests.get(url, stream=True)
-        response.raise_for_status()
+        response.raise_for_status()  # Raises an exception for 4xx/5xx responses
+        print(f"Downloading {url} to {filepath}")
         with open(filepath, 'wb') as file:
             for chunk in response.iter_content(1024):
                 file.write(chunk)
         print(f"Downloaded: {filename}")
-    except requests.RequestException:
-        print(f"Failed to download: {filename}")
+    except requests.RequestException as e:
+        print(f"Failed to download: {filename}, Error: {e}")
+
 
 def extract_resources(url, regex=None, include_images=True, include_videos=True, save_path=None, verbose=False):
     try:
@@ -29,7 +31,7 @@ def extract_resources(url, regex=None, include_images=True, include_videos=True,
         return
     
     soup = BeautifulSoup(response.text, 'html.parser')
-    base_url = f"{urlparse(url).scheme}://{urlparse(url).netloc}"
+    base_url = f"{urlparse(url).scheme}://{urlparse(url).netloc}{urlparse(url).path}"
     resources = []
     
     if include_images:
@@ -37,11 +39,11 @@ def extract_resources(url, regex=None, include_images=True, include_videos=True,
             src = img.get('src')
             alt = img.get('alt', '')
             if src:
-                full_url = src
+                
                 if not regex or re.search(regex, src):
-                    resources.append(("IMAGE", full_url, alt))
+                    resources.append(("IMAGE", src, alt))
                     if save_path:
-                        download_file(full_url, save_path)
+                        download_file(urljoin(base_url, src), save_path)
     
     if include_videos:
         for video in soup.find_all('video'):
@@ -55,13 +57,13 @@ def extract_resources(url, regex=None, include_images=True, include_videos=True,
                 if not regex or re.search(regex, src):
                     resources.append(("VIDEO", full_url, ''))
                     if save_path:
-                        download_file(full_url, save_path)
+                        download_file(urljoin(base_url, src), save_path)
     
     # Print results
     print(f"PATH {save_path if save_path else base_url}")
     for res_type, res_src, res_alt in resources:
         alt_text = f' "{res_alt}"' if res_alt  else ''
-        print(f"{res_type}{res_src} {alt_text}")
+        print(f"{res_type} {res_src} {alt_text}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract resources from a webpage.")
