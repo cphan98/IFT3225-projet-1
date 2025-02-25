@@ -37,7 +37,7 @@ def extract_resources(url, regex=None, include_images=True, include_videos=True,
             src = img.get('src')
             alt = img.get('alt', '')
             if src:
-                full_url = urljoin(base_url, src)
+                full_url = src
                 if not regex or re.search(regex, src):
                     resources.append(("IMAGE", full_url, alt))
                     if save_path:
@@ -58,10 +58,10 @@ def extract_resources(url, regex=None, include_images=True, include_videos=True,
                         download_file(full_url, save_path)
     
     # Print results
-    print(f"PATH {save_path if save_path else url}")
-    for res_type, res_url, res_alt in resources:
-        alt_text = f' "{res_alt}"' if res_alt and verbose else ''
-        print(f"{res_type} {res_url}{alt_text}")
+    print(f"PATH {save_path if save_path else base_url}")
+    for res_type, res_src, res_alt in resources:
+        alt_text = f' "{res_alt}"' if res_alt  else ''
+        print(f"{res_type}{res_src} {alt_text}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract resources from a webpage.")
