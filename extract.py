@@ -58,10 +58,10 @@ def extract_resources(url, regex=None, include_images=True, include_videos=True,
                         download_file(full_url, save_path)
     
     # Print results
-    print(f"PATH {save_path if save_path else base_url}")
+    print(f"PATH {save_path if save_path else url}")
     for res_type, res_url, res_alt in resources:
         alt_text = f' "{res_alt}"' if res_alt and verbose else ''
-        print(f"{res_type} {os.path.basename(res_url)}{alt_text}")
+        print(f"{res_type} {res_url}{alt_text}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract resources from a webpage.")
