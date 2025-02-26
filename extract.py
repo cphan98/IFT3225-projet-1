@@ -1,11 +1,27 @@
 #!/usr/bin/env python3
 
-import argparse # Pour traiter les arguments de la ligne de commande
-import os # Pour manipuler les fichiers et répertoires
-import re # Pour les expressions régulières
-import requests # Pour télécharger les ressources
-from bs4 import BeautifulSoup # Pour analyser le HTML
-from urllib.parse import urljoin, urlparse # Pour manipuler les URLs
+import argparse 
+import os
+import re 
+import requests 
+from bs4 import BeautifulSoup 
+from urllib.parse import urljoin, urlparse 
+
+def main():
+    parser = argparse.ArgumentParser(description="Extract resources from a webpage.")
+    parser.add_argument("url", type=str, help="URL of the webpage")
+    parser.add_argument("-r", "--regex", type=str, help="Filter resources matching regex", default=None)
+    parser.add_argument("-i", action="store_false", dest="include_images", help="Exclude images")
+    parser.add_argument("-v", action="store_true", dest="verbose", help="Include alt text for images")
+    parser.add_argument("-p", "--path", type=str, help="Directory to save resources", default=None)
+    # parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
+    
+    args = parser.parse_args()
+    
+    if args.path:
+        os.makedirs(args.path, exist_ok=True)
+    
+    extract_resources(args.url, args.regex, args.include_images, True, args.path, args.verbose)
 
 def download_file(url, path):
     filename = os.path.basename(urlparse(url).path)
@@ -66,17 +82,5 @@ def extract_resources(url, regex=None, include_images=True, include_videos=True,
         print(f"{res_type} {res_src} {alt_text}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Extract resources from a webpage.")
-    parser.add_argument("url", type=str, help="URL of the webpage")
-    parser.add_argument("-r", "--regex", type=str, help="Filter resources matching regex", default=None)
-    parser.add_argument("-i", action="store_false", dest="include_images", help="Exclude images")
-    parser.add_argument("-v", action="store_true", dest="verbose", help="Include alt text for images")
-    parser.add_argument("-p", "--path", type=str, help="Directory to save resources", default=None)
-    # parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
+    main()
     
-    args = parser.parse_args()
-    
-    if args.path:
-        os.makedirs(args.path, exist_ok=True)
-    
-    extract_resources(args.url, args.regex, args.include_images, True, args.path, args.verbose)
