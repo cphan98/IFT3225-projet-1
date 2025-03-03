@@ -139,7 +139,7 @@ def main():
         print("Error: No base path detected.", file=sys.stderr)
         sys.exit(1)
 
-    print(generate_html(base_path, resources))
+    print(generate_html(resources))
 
 if __name__ == "__main__":
     main()
