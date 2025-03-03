@@ -1,8 +1,7 @@
 import sys
-import os
 import argparse
 
-def generate_html(base_path, resources):
+def generate_html(resources):
     html = """<!DOCTYPE html>
 <html lang="en">
 <head>
