@@ -29,12 +29,16 @@ def generate_html(base_path, resources):
     # Add rows with file names and their descriptions
     for resource, alt_text, res_type in resources:
         if res_type == "IMAGE":
-            html += f'<tr><td>{resource}</td><td>{alt_text}</td></tr>\n'
+            html += f'<tr  class="clickable" data-src="{resource}" data-type="{res_type}"><td>{resource}</td><td>{alt_text}</td></tr>\n'
         elif res_type == "VIDEO":
-            html += f'<tr><td>{resource}</td><td>{alt_text}</td></tr>\n'
+            html += f'<tr class="clickable" data-src="{resource}" data-type="{res_type}"><td>{resource}</td><td>{alt_text}</td></tr>\n'
 
     html += """        </tbody>
     </table>
+
+    <div id="popup" class="popup">
+        <span id="popup-content"></span>
+    </div>
 
     <div class="text-center mt-3">
         <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#carouselModal">Carousel</button>
@@ -107,6 +111,7 @@ def generate_html(base_path, resources):
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>"""
     
