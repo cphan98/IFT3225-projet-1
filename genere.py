@@ -1,10 +1,10 @@
 import sys # Import the sys module to read from stdin
 import argparse # Command-line parsing library
-
+import os # Operating system library
 # Generate the HTML content that displays the images and videos in a table and provide a carousel and gallery view
 # @param resources: List of resources
 # @return HTML content
-def generate_html(resources):
+def generate_html(base_path, resources):
     # Add header and CSS links and start the body
     html = """<!DOCTYPE html>
     <html lang="en">
@@ -32,9 +32,9 @@ def generate_html(resources):
     # Add rows with file names and their descriptions to the table
     for resource, alt_text, res_type in resources:
         if res_type == "IMAGE": # If the resource is an image
-            html += f'<tr  class="clickable" data-src="{resource}" data-type="{res_type}"><td>{resource}</td><td>{alt_text}</td></tr>\n'
+            html += f'<tr  class="clickable" data-src="{os.path.join(base_path, resource)}" data-type="{res_type}"><td>{os.path.join(base_path, resource)}</td><td>{alt_text}</td></tr>\n'
         elif res_type == "VIDEO": # If the resource is a video
-            html += f'<tr class="clickable" data-src="{resource}" data-type="{res_type}"><td>{resource}</td><td>{alt_text}</td></tr>\n'
+            html += f'<tr class="clickable" data-src="{os.path.join(base_path, resource)}" data-type="{res_type}"><td>{os.path.join(base_path, resource)}</td><td>{alt_text}</td></tr>\n'
 
     # Close the table and add the popup div
     html += """</tbody>
@@ -67,11 +67,11 @@ def generate_html(resources):
         active_class = "active" if i == 0 else "" # Add the 'active' class to the first item
         if res_type == "IMAGE": # If the resource is an image
             html += f'<div class="carousel-item {active_class}">\n'
-            html += f'<img src="{resource}" class="d-block w-100">\n'
+            html += f'<img src="{os.path.join(base_path, resource)}" class="d-block w-100">\n'
             html += f'</div>\n'
         elif res_type == "VIDEO": # If the resource is a video
             html += f'<div class="carousel-item {active_class}">\n'
-            html += f'<video controls class="d-block w-100"><source src="{resource}" type="video/mp4"></video>\n'
+            html += f'<video controls class="d-block w-100"><source src="{os.path.join(base_path, resource)}" type="video/mp4"></video>\n'
             html += f'</div>\n'
 
     # Add carousel controls
@@ -104,9 +104,9 @@ def generate_html(resources):
     for resource, _, res_type in resources:
         html += f'<div class="col-md-4 mb-3">\n' # Add a column with a margin
         if res_type == "IMAGE": # If the resource is an image
-            html += f'<img src="{resource}" class="img-fluid rounded">\n'
+            html += f'<img src="{os.path.join(base_path, resource)}" class="img-fluid rounded">\n'
         elif res_type == "VIDEO": # If the resource is a video
-            html += f'<video controls class="img-fluid"><source src="{resource}" type="video/mp4"></video>\n'
+            html += f'<video controls class="img-fluid"><source src="{os.path.join(base_path, resource)}" type="video/mp4"></video>\n'
         html += f'</div>\n' # Close the column
 
     # Close the gallery modal and add the closing tags
