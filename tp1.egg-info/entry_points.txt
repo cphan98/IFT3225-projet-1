@@ -1,0 +1,4 @@
+[console_scripts]
+extract = extract:main
+genere = genere:main
+
