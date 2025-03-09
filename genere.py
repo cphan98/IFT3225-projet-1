@@ -1,3 +1,4 @@
+#! /u/cadillol/venv_tp1/bin/python
 import sys # Import the sys module to read from stdin
 import argparse # Command-line parsing library
 import os # Operating system library
@@ -124,8 +125,8 @@ def generate_html(base_path, resources):
 
 # Main function
 def main():
-    parser = argparse.ArgumentParser(description="generate html with the resources from a webpage. Authors: Hoang-Thi-Thi Cynthia Phan(20220019) , Laura Cadillo Manrique (20251700) ") # Add a description
-    parser.add_argument("url", type=str, help="URL of the webpage") # Add a help message
+    parser = argparse.ArgumentParser(description="generate html with the resources from a webpage. Authors: Hoang-Thi-Thi Cynthia Phan(20220019) , Laura Cadillo Manrique (20251700) ")
+    parser.add_argument("url", type=str, help="URL of the webpage") 
     base_path = None # Initialize base_path to None
     resources = [] # Initialize resources to an empty list
 
