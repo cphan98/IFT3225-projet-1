@@ -14,7 +14,7 @@ def generate_html(base_path, resources):
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Viewer</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="HoangThiThiCynthia.Phan+Laura.CadilloManrique_style.css">
+        <link rel="stylesheet" href="HoangThiThiCynthia.Phan_Laura.CadilloManrique_style.css">
     </head>
     <body class="container mt-4">
         <h1 class="text-center">Viewer</h1>
@@ -117,7 +117,7 @@ def generate_html(base_path, resources):
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="HoangThiThiCynthia.Phan+Laura.CadilloManrique_script.js"></script>
+    <script src="HoangThiThiCynthia.Phan_Laura.CadilloManrique_script.js"></script>
     </body>
     </html>"""
     
